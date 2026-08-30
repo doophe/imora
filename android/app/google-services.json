@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "59463919192",
+    "project_id": "imora-cf86d",
+    "storage_bucket": "imora-cf86d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59463919192:android:06b9c33dcbb3bbcbd28c2d",
+        "android_client_info": {
+          "package_name": "com.prolib"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59463919192-oc2aqmjg3tjbpb2pi0c0gbepk1dqb0qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB11pQnh2W_Ud0pNQ4Rutd6BdOAhPbtcJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59463919192-oc2aqmjg3tjbpb2pi0c0gbepk1dqb0qd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "59463919192-d6g1qqqckoj2rqivqsg5lscd3i08rl7l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.ProLib"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
