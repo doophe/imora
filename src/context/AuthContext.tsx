@@ -22,6 +22,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<void>;
   signInAsGuest: () => Promise<void>;
   signOut: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   toggleSavePrompt: (promptId: string) => Promise<void>;
   isPromptSaved: (promptId: string) => boolean;
   updateProfilePhoto: (photoURL: string) => Promise<void>;
@@ -161,6 +162,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const deleteAccount = async () => {
+    setLoading(true);
+    try {
+      await authService.deleteAccount();
+      setUser(null);
+      setLocalSavedIds([]);
+      await AsyncStorage.removeItem(LOCAL_SAVED_KEY);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const toggleSavePrompt = async (promptId: string) => {
     const exists = localSavedIds.includes(promptId);
     const updated = exists
@@ -208,6 +221,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signInWithGoogle,
     signInAsGuest,
     signOut,
+    deleteAccount,
     toggleSavePrompt,
     isPromptSaved,
     updateProfilePhoto,

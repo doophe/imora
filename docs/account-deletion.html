@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imora — Hesap ve Veri Silme Talebi (Account Deletion)</title>
+  <style>
+    :root {
+      --bg: #0B1120;
+      --card-bg: #1E293B;
+      --text: #F8FAFC;
+      --text-sub: #94A3B8;
+      --primary: #EF4444;
+      --accent: #38BDF8;
+      --border: #334155;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      background-color: var(--card-bg);
+      padding: 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h1 {
+      color: #F87171;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 19px;
+      margin-top: 28px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+    p, li {
+      color: var(--text-sub);
+      font-size: 15px;
+    }
+    .step-card {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .step-title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .warning-box {
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--primary);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Imora — Hesap ve Veri Silme Talebi</h1>
+    <p>Google Play Kullanıcı Verileri Politikası uyarınca, Imora kullanıcıları hesaplarını ve hesaplarıyla ilişkili tüm verilerin kalıcı olarak silinmesini talep etme hakkına sahiptir.</p>
+
+    <h2>1. Uygulama İçerisinden Anında Silme (Önerilen)</h2>
+    <div class="step-card">
+      <div class="step-title">Adımlar:</div>
+      <ol>
+        <li>Imora uygulamasını açın ve oturum açın.</li>
+        <li>Alt menüden <strong>Profil</strong> sekmesine geçin.</li>
+        <li>Sayfanın en altındaki kırmızı renkli <strong>"Hesabımı ve Verilerimi Sil"</strong> seçeneğine dokunun.</li>
+        <li>Açılan onay penceresinde <strong>"Kalıcı Olarak Sil"</strong> butonuna basın.</li>
+      </ol>
+      <p style="margin-bottom: 0;"><em>Bu işlem sonucunda hesabınız, kullanıcı profiliniz, favori listeleriniz ve cihazınızdaki yerel notlarınız saniyeler içinde kalıcı olarak silinir.</em></p>
+    </div>
+
+    <h2>2. Web / E-posta Yoluyla Silme Talebi</h2>
+    <p>Eğer uygulamaya artık erişemiyorsanız veya cihazınızdan kaldırdıysanız, hesabınızın ve verilerinizin silinmesi için aşağıdaki e-posta adresine talepte bulunabilirsiniz:</p>
+    
+    <div class="step-card">
+      <p><strong>Destek E-postası:</strong> <a href="mailto:efeyalcindag0@gmail.com?subject=Imora%20Hesap%20Silme%20Talebi">efeyalcindag0@gmail.com</a></p>
+      <p><strong>E-posta Konusu:</strong> <code>Imora Hesap Silme Talebi</code></p>
+      <p><strong>İçerik:</strong> Kayıtlı olduğunuz e-posta adresinizi veya kullanıcı adınızı belirtmeniz yeterlidir. Güvenlik doğrulaması amacıyla şifreniz kesinlikle talep edilmez.</p>
+    </div>
+
+    <h2>3. Silinen Veriler ve Süreç</h2>
+    <ul>
+      <li><strong>Silinen Veri Türleri:</strong> E-posta adresi, profil ismi, profil fotoğrafı, Firebase Auth kimlik bilgileri, Firestore'daki kullanıcı belgesi ve favorilere kaydedilen prompt ID'leri.</li>
+      <li><strong>Silinme Süresi:</strong> Uygulama içi silme anında gerçekleşir; e-posta talepleri en geç <strong>48 saat</strong> içinde tamamlanarak kullanıcıya teyit e-postası gönderilir.</li>
+      <li><strong>Veri Saklama (Retention):</strong> Silme işlemi sonrasında hiçbir kullanıcı verisi yedeklerde veya sunucuda saklanmaz, geri döndürülemez şekilde yok edilir.</li>
+    </ul>
+
+    <div class="warning-box">
+      <strong>⚠️ Dikkat:</strong> Hesap silme işlemi kalıcıdır ve geri alınamaz. Hesabınızı sildikten sonra aynı e-posta ile yeni bir hesap açabilirsiniz ancak eski favorileriniz veya özel notlarınız geri yüklenemez.
+    </div>
+
+    <p style="margin-top: 30px; text-align: center;">
+      <a href="privacy-policy.html">← Gizlilik Politikasına Dön</a>
+    </p>
+  </div>
+</body>
+</html>

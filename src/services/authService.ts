@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeModules, Platform, TurboModuleRegistry } from 'react-native';
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   GoogleAuthProvider,
   sendPasswordResetEmail,
   signInAnonymously,
@@ -17,7 +18,7 @@ import {
   updateProfile,
   User,
 } from 'firebase/auth';
-import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { UserProfile } from '../types/auth';
 import { auth, db } from './firebase';
 
@@ -430,6 +431,63 @@ export const authService = {
       }
     }
     await this.saveLocalSession(null);
+  },
+
+  /**
+   * Hesabı ve Tüm İlişkili Verileri Kalıcı Olarak Sil (Account & Data Deletion)
+   * 1. Cloud Firestore'daki users/{userId} dokümanını siler.
+   * 2. AsyncStorage'daki tüm özel notları ve yerel oturum verilerini siler.
+   * 3. Firebase Authentication kullanıcısını kalıcı olarak siler.
+   */
+  async deleteAccount(): Promise<void> {
+    const currentUser = auth?.currentUser;
+    const session = await this.getLocalSession();
+    const userId = currentUser?.uid || session?.uid;
+
+    if (!userId) {
+      await this.saveLocalSession(null);
+      await this.clearGuestSession();
+      memoryUserCache = null;
+      return;
+    }
+
+    const isGuest = userId.startsWith('guest_') || userId === 'device_guest_imora';
+
+    // 1. Delete Firestore user document if real user
+    if (!isGuest && db) {
+      try {
+        const userRef = doc(db, 'users', userId);
+        await deleteDoc(userRef);
+      } catch (err: any) {
+        console.warn('[Firestore] deleteAccount userDoc warning:', err);
+      }
+    }
+
+    // 2. Delete private custom notes stored on device
+    try {
+      await AsyncStorage.removeItem(`@imora_private_custom_prompts_${userId}`);
+    } catch (e) {
+      console.warn('[Storage] delete custom notes error:', e);
+    }
+
+    // 3. Delete Firebase Auth User
+    if (currentUser && !isGuest) {
+      try {
+        await deleteUser(currentUser);
+      } catch (authErr: any) {
+        if (authErr?.code === 'auth/requires-recent-login') {
+          throw new Error(
+            'Güvenlik nedeniyle bu işlem için hesabınıza yakın zamanda giriş yapmış olmanız gerekmektedir. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra silme işlemini tekrarlayın.'
+          );
+        }
+        throw new Error(getFirebaseErrorMessage(authErr));
+      }
+    }
+
+    // 4. Clear all local session caches
+    await this.clearGuestSession();
+    await this.saveLocalSession(null);
+    memoryUserCache = null;
   },
 
   /**

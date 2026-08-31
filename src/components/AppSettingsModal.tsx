@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import {
   Alert,
+  Linking,
   Modal,
   Platform,
   ScrollView,
@@ -212,10 +213,18 @@ export default function AppSettingsModal({ visible, onClose }: AppSettingsModalP
               onPress={() =>
                 Alert.alert(
                   'Imora AI Prompt Library',
-                  'Gelişmiş AI promptları, kategoriler ve özel kütüphane yönetimi platformu.\n\n© 2026 Imora'
+                  'Gelişmiş AI promptları, kategoriler ve özel kütüphane yönetimi platformu.\n\n© 2026 Imora\n\nGizlilik Politikamızı tarayıcınızda görüntülemek ister misiniz?',
+                  [
+                    {
+                      text: 'Gizlilik Politikasını Aç',
+                      onPress: () =>
+                        Linking.openURL('https://doophe.github.io/imora/privacy-policy.html').catch(() => {}),
+                    },
+                    { text: 'Kapat', style: 'cancel' },
+                  ]
                 )
               }>
-              <Text style={[styles.infoLabel, { color: colors.primary }]}>Lisans & Gizlilik</Text>
+              <Text style={[styles.infoLabel, { color: colors.primary }]}>Lisans & Gizlilik Politikası</Text>
               <Text style={[styles.infoArrow, { color: colors.primary }]}>›</Text>
             </TouchableOpacity>
           </View>

@@ -86,7 +86,7 @@ interface LibraryScreenProps {
 export default function LibraryScreen({ onLogout }: LibraryScreenProps) {
   const insets = useSafeAreaInsets();
   const { colors, isDark } = useTheme();
-  const { user, savedPromptIds, signOut, toggleSavePrompt, isPromptSaved, updateProfilePhoto } = useAuth();
+  const { user, savedPromptIds, signOut, deleteAccount, toggleSavePrompt, isPromptSaved, updateProfilePhoto } = useAuth();
   const [updatingPhoto, setUpdatingPhoto] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<PromptItem | null>(null);
@@ -367,6 +367,29 @@ export default function LibraryScreen({ onLogout }: LibraryScreenProps) {
           onPress: async () => {
             await signOut();
             onLogout?.();
+          },
+        },
+      ]
+    );
+  };
+
+  const handleDeleteAccountAction = () => {
+    Alert.alert(
+      'Hesabı ve Verileri Sil',
+      'Hesabınızı, kaydedilen tüm promptlarınızı ve size özel yerel notlarınızı kalıcı olarak silmek istediğinize emin misiniz?\n\nBu işlem geri alınamaz.',
+      [
+        { text: 'Vazgeç', style: 'cancel' },
+        {
+          text: 'Kalıcı Olarak Sil',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteAccount();
+              Alert.alert('Hesabınız Silindi', 'Hesabınız ve ilişkili tüm verileriniz başarıyla kalıcı olarak silindi.');
+              onLogout?.();
+            } catch (err: any) {
+              Alert.alert('Hata', err?.message || 'Hesap silinirken bir sorun oluştu. Lütfen tekrar deneyin.');
+            }
           },
         },
       ]
@@ -973,14 +996,29 @@ export default function LibraryScreen({ onLogout }: LibraryScreenProps) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.profileMenuItem, { borderBottomWidth: 0 }]}
+              style={[styles.profileMenuItem, { borderBottomColor: colors.borderLight }]}
               onPress={handleLogoutAction}
               activeOpacity={0.7}>
               <View style={styles.menuItemLeft}>
                 <View style={[styles.menuIconCircle, { backgroundColor: colors.surfaceSubtle }]}>
-                  <LogoutIcon color="#EF4444" size={18} />
+                  <LogoutIcon color={colors.text} size={18} />
                 </View>
-                <Text style={[styles.profileMenuText, { color: '#EF4444' }]}>Çıkış Yap</Text>
+                <Text style={[styles.profileMenuText, { color: colors.text }]}>Çıkış Yap</Text>
+              </View>
+              <ChevronRightIcon color={colors.textMuted} size={15} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.profileMenuItem, { borderBottomWidth: 0 }]}
+              onPress={handleDeleteAccountAction}
+              activeOpacity={0.7}>
+              <View style={styles.menuItemLeft}>
+                <View style={[styles.menuIconCircle, { backgroundColor: isDark ? 'rgba(239, 68, 68, 0.15)' : '#FEE2E2' }]}>
+                  <TrashIcon color="#EF4444" size={18} />
+                </View>
+                <Text style={[styles.profileMenuText, { color: '#EF4444', fontWeight: '600' }]}>
+                  Hesabımı ve Verilerimi Sil
+                </Text>
               </View>
               <ChevronRightIcon color="#EF4444" size={15} />
             </TouchableOpacity>
